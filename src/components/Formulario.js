@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { CategoriasContext } from '../context/CategoriasContext'
+import { RecetasContext } from '../context/RecetasContext';
 
 const Formulario = () => {
 
     const [ busqueda, guardarBusqueda ] = useState({
         nombre: '',
         categoria: ''
-    })
+    });
 
-    const { nombre, categoria} = busqueda;
 
+
+    const { categorias } = useContext(CategoriasContext);
+    const { buscarRecetas, guardarConsultar  } = useContext(RecetasContext);
 
     // onChange
 
@@ -19,8 +23,21 @@ const Formulario = () => {
         });
     }
 
+    // onSubmit
+
+    const onSubmit = e => {
+        e.preventDefault();
+
+        buscarRecetas(busqueda);
+        guardarConsultar(true);
+
+    }
+
     return ( 
-        <form className="col-12">
+        <form className="col-12"
+        
+            onSubmit={onSubmit}
+        >
 
             <fieldset className="text-center">
                 <legend>Busca bebidas por categoría o Ingrediente</legend>
@@ -43,9 +60,12 @@ const Formulario = () => {
                     <select
                         name='categoria'
                         className="form-control"
-                        onChange=''
+                        onChange={onChange}
                     >
                         <option> -- Seleccionar -- </option>
+                        {categorias.map( categoria => (
+                            <option key={categoria.strCategory} name={categoria.strCategory} >{categoria.strCategory}</option>
+                        ))}
                     </select>
                 </div>
 
