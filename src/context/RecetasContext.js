@@ -25,7 +25,7 @@ export const RecetasContext = createContext();
     
                     const resultado = await axios.get(url);
     
-                    guardarRecetas(resultado.data.drinks)
+                    guardarRecetas(resultado.data.drinks) // Guardo las combinaciones que hay de nombre y categoría. Me devuelve array de objetos con recetas, ingrecientes,...
                 }
                 obtenerRecetas();
             }
